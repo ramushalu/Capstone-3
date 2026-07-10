@@ -6,8 +6,6 @@
 
 The objective of this part is to compare different machine learning models, evaluate their performance using cross-validation, perform hyperparameter tuning, and build a robust machine learning pipeline that can be saved and reused for future predictions.
 
----
-
 # 1. Decision Tree Baseline
 
 A Decision Tree Classifier was trained using the default parameters (`max_depth=None`).
@@ -20,8 +18,6 @@ A Decision Tree Classifier was trained using the default parameters (`max_depth=
 ### Interpretation
 
 The baseline Decision Tree achieved perfect training accuracy but lower testing accuracy, indicating that it learned the training data extremely well. Decision Trees are considered high-variance models because they make greedy decisions at every split and can easily memorize the training data, which may reduce their ability to generalize to unseen data.
-
----
 
 # 2. Controlled Decision Tree
 
@@ -45,8 +41,6 @@ The controlled Decision Tree reduced overfitting by limiting the tree depth and 
 - **min_samples_split** prevents splitting nodes with very few samples, reducing noise.
 
 The controlled model achieved better testing accuracy and improved generalization.
-
----
 
 # 3. Gini vs Entropy
 
@@ -72,8 +66,6 @@ If **Gini = 0**, the node is pure because all samples belong to the same class.
 ### Interpretation
 
 The Gini criterion produced slightly better test accuracy than Entropy for this dataset.
-
----
 
 # 4. Random Forest
 
@@ -113,8 +105,6 @@ At each split, only a random subset of features is considered.
 
 Combining predictions from many trees reduces variance and improves model stability.
 
----
-
 # 4a. Gradient Boosting
 
 Gradient Boosting was trained using:
@@ -128,8 +118,6 @@ Gradient Boosting was trained using:
 - **Training Accuracy:** 0.9560
 - **Testing Accuracy:** 0.9328
 - **ROC-AUC:** 0.9502
-
----
 
 # 4b. Feature Ablation Study
 
@@ -158,8 +146,6 @@ This indicates that these features still contribute useful predictive informatio
 
 Although removing features simplifies the model and reduces computation, it should only be done if performance degradation is acceptable.
 
----
-
 # 5. Cross Validation
 
 A **5-fold Stratified Cross Validation** was performed.
@@ -181,8 +167,6 @@ A **5-fold Stratified Cross Validation** was performed.
 ### Interpretation
 
 Cross-validation provides a more reliable estimate of model performance because every sample is used for both training and validation across different folds, reducing dependence on a single train-test split.
-
----
 
 # 6. GridSearchCV
 
@@ -215,8 +199,6 @@ Cross-validation provides a more reliable estimate of model performance because 
 
 Grid Search evaluates every possible parameter combination and selects the one with the highest cross-validation score. Although it is computationally expensive, it guarantees evaluation of all parameter combinations, unlike Randomized Search.
 
----
-
 # 7. Manual Learning Curve
 
 | Training Fraction | Training AUC | Test AUC |
@@ -230,8 +212,6 @@ Grid Search evaluates every possible parameter combination and selects the one w
 ### Interpretation
 
 The Training AUC remained close to 1.0, showing that the model fits the training data extremely well. The Test AUC stabilized around 0.95 as more data was added, indicating that the model has good generalization performance. Since the Test AUC has largely plateaued, the model appears to be **capacity-limited rather than data-limited**.
-
----
 
 # 8. Model Serialization
 
@@ -251,8 +231,6 @@ Predictions generated for two unseen samples were:
 
 This confirms that the serialized model can be reused without retraining.
 
----
-
 # Final Model Comparison
 
 | Model | Test ROC-AUC | 5-Fold Mean ROC-AUC | 5-Fold Std ROC-AUC |
@@ -261,8 +239,6 @@ This confirms that the serialized model can be reused without retraining.
 | Controlled Decision Tree | 0.9403 | 0.9352 | 0.0156 |
 | Random Forest | 0.9487 | 0.9547 | 0.0078 |
 | Gradient Boosting | **0.9502** | **0.9552** | **0.0077** |
-
----
 
 # Recommended Model
 
